@@ -41,7 +41,8 @@ async function initDataBlogList() {
         // 배포 상태에서 GitHub API를 사용(이용자가 적을 때)
         if (!localDataUsing) {
             response = await fetch(
-                `https://api.github.com/repos/${siteConfig.username}/${siteConfig.repositoryName}/contents/blog`
+                //`https://api.github.com/repos/${siteConfig.username}/${siteConfig.repositoryName}/contents/blog`
+                `https://api.github.com/repos/sda0503/blog/contents/blog`
             );
         } else {
             // 배포 상태에서 Local data를 사용(이용자가 많을 때)
