@@ -58,7 +58,8 @@ if (isLocal) {
   $blogTitle.onclick = () => {
     //const url = new URL(`https://${siteConfig.username}.github.io/${siteConfig.repositoryName}/`);
     const url =`https://sda0503.github.io/blog/`;
-    window.history.pushState({}, "", url);
+    location.href=url;
+    //window.history.pushState({}, "", url);
     renderBlogList();
   };
 }
