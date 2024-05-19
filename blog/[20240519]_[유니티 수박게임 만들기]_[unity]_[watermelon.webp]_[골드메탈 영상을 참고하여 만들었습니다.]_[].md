@@ -61,3 +61,74 @@ public class prefabs : MonoBehaviour
 ```
 
 [골드메탈 수박게임 유튜브 영상](https://www.youtube.com/watch?v=eQPp0QTz4JM&list=PLO-mt5Iu5TeajtA5UQT7_2UjB7_dkGagU)
+
+
+# 유니티를 사용하여 수박게임 만들기2
+
+과정1.게임매니저 생성하여 프리팹 생성
+
+과정2.프리팹에 애니메이션 추가하여 관리하기
+
+C# 코드: 게임매니저.cs
+```csharp
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class GameManager : MonoBehaviour
+{
+    public prefabs last;
+    public GameObject prefab;
+    public Transform Group;
+
+    void Awake()
+    {
+        Application.targetFrameRate = 60;       
+    }
+    void Start()
+    {
+        NextCircle();
+    }
+
+    prefabs GetCircle()
+    {
+        GameObject instant = Instantiate(prefab, Group);
+        prefabs instantPrefab = instant.GetComponent<prefabs>();
+        return instantPrefab;
+    }
+
+    void NextCircle()
+    {
+        prefabs newPrefab =  GetCircle();
+        last = newPrefab;
+        last.level = Random.Range(0, 8);
+        last.gameObject.SetActive(true);
+
+        StartCoroutine("WaitNext");
+    }
+
+    IEnumerator WaitNext()
+    {
+        while (last != null){
+            yield return null;
+        }
+        yield return new WaitForSeconds(2.5f);
+
+        NextCircle();
+    }
+
+    public void TouchDown()
+    {
+        if(last == null)
+            return;
+        last.Drag();
+    }
+    public void TouchUp()
+    {
+        if (last == null)
+            return;
+        last.Drop();
+        last = null;
+    }
+}
+```
